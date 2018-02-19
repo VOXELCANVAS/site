@@ -1,0 +1,221 @@
+<nav class="navbar navbar-default" id="game_ui" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">VOXELCANVAS EDITOR</a>
+            <ul class="nav navbar-nav">
+                <li><a id="undo" href="#" class="redoundo"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></li>
+                <li><a id="redo" href="#" class="redoundo"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
+            </ul>
+        </div>
+    
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+<!--             <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><span class="glyphicon glyphicon-equalizer" aria-hidden="true" id="modechange:put"> put</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-picture" aria-hidden="true" id="modechange:view"> view</a></li>
+                    </ul>
+                </li>
+            </ul> -->
+            <div id="workspace">
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <span id="intocolor"></span>
+                        <label hidden><input class="form-control" type="text" value="1" style="width:38px;">x<input class="form-control" type="text" value="1" style="width:38px;">x<input class="form-control" type="text" value="1" style="width:38px;"></label>
+                        <label><input class="form-control" type="checkbox" id="opacity" value="">alpha</label>
+                        <label><input class="form-control" type="checkbox" id="colpic" value="">picker</label>
+                        <label><input class="form-control" type="checkbox" id="delete" value="">delete</label>
+                        <label><input class="form-control" type="checkbox" id="copypaste" value="">edit</label>
+                    </div>
+                </form>
+                
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" type="button" id="cameracontrol" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a><label>Field of view<input class="form-control" type="range" id="camera:range" min="5" max="90" value="45"/></label></a></li>
+                            <li><a><label>vignette<input class="form-control" type="checkbox" id="camera:vignette"></label></a></li>
+                            <li><a><label>bloom<input class="form-control" type="checkbox" id="camera:bloom"></label></a></li>
+                            <li><a><label>sepia<input class="form-control" type="checkbox" id="camera:sepia"></label></a></li>
+                        </ul>
+                    </li>               
+
+                    <li class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" type="button" id="background" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon glyphicon-picture" aria-hidden="true"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" id="background:tropical"><label>tropical</label></a></li>
+                            <li><a class="dropdown-item" href="#" id="background:heliport"><label>heliport</label></a></li>
+                            <li><a><label id="insertbackgroundcolor"></label></a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" type="button" id="background" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li hidden ><a><label>x:<input class="form-control" type="range" id="light:x" min="0" max="360"/></a></li>
+                            <li hidden><a><label>y:<input class="form-control" type="range" id="light:y" min="0" max="360"/></a></li>
+                            <li hidden><a><label>z:<input class="form-control" type="range" id="light:z" min="0" max="360"/></a></li>
+                                
+                            <li><a><label>platform<input class="form-control" type="checkbox" id="platform" checked></label></a></li>
+                            <li><a><label id="lightcolor"></label></a></li>
+                        </ul>
+                    </li>
+                </ul>
+                    
+            <ul class="nav navbar-nav navbar-right">
+                <li><a title="gallery" data-toggle="modal" id="gallery"><span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"> gallery</a></li>
+                <li><a title="download" data-toggle="modal" href='#modal-dl' onclick="readyDownload()"><span class="glyphicon glyphicon-save-file" aria-hidden="true"> download</a></li>
+                <li><a title="save" data-toggle="modal" href='#modal-save' onclick="easySave()"><span class="glyphicon glyphicon-save" aria-hidden="true"> save</a></li>
+                <li><a title="share" data-toggle="modal" href='#modal-share' onclick="readyShare()"><span class="glyphicon glyphicon-send" aria-hidden="true"> share</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </nav>
+        
+<a class="tuterialelement" id="tuterialelement" href="https://voxelcanvas.me/tuterial.html#/"></a>
+<a id="rename" data-toggle="modal" href='#modal-rename'></a>
+<a id="openRecodewindow" data-toggle="modal" href='#modal-record'></a>
+<div class="modal fade" id="modal-share">
+    <div class="modal-dialog" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Share via url</h4>
+            </div>
+            <div class="modal-body">
+
+                <span class="badge">Final image</span>
+
+                <img id="finalimage" width="80%" class="img-responsive center-block" alt="Image"></img>
+
+                <br />
+            
+            
+                <span class="badge">Custom link</span>
+            <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">https://voxelcanvas.me/build/?m=</span>
+                  <input type="text" class="form-control"id="customVoxelID">
+            </div>
+                <br />
+            
+            
+            
+                <span class="badge">save url</span>
+            <div class="input-group">
+                  <input type="text" class="form-control" id="outputurl">
+                  <span class="input-group-btn">
+                    <button class="btn btn-info disabled" type="button" id="tweetbutton" onclick="sharetoTwitter()">Tweet</button>
+                </span>
+            </div>
+            
+            
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="sharewithOwnURL()">Share</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-rename">
+    <div class="modal-dialog" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Input your name</h4>
+            </div>
+            <div class="modal-body">
+                <input class="form-control" type="text" id="newname"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="setnewname()" id="changeNamesubmit">Change</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-record">
+    <div class="modal-dialog" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Record</h4>
+            </div>
+            <div class="modal-body">
+                <img id="recgif" width="80%" class="img-responsive center-block" alt="Image"></img>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-save">
+    <div class="modal-dialog" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">EASY SAVE</h4>
+            </div>
+            <div class="modal-body">
+                <span class="badge">model image</span>
+                <img id="easysaveimage" width="80%" class="img-responsive center-block" alt="Image"></img>
+                <br/>
+                <span class="badge">save url</span>
+                <input class="form-control" type="text" id="url"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-dl">
+    <div class="modal-dialog" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">DOWNLOAD</h4>
+            </div>
+            <div class="modal-body">
+
+                <span class="badge">Final image</span>
+
+                <img id="downloadimage"  width="80%" class="img-responsive center-block" alt="Image"></img>
+
+                <br />
+                <span class="badge">download link</span>
+                <br />
+                <a type="button" class="btn btn-danger" id="DLlink" download="voxel.obj" href="#" data-loading-text="<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span>Processing">DOWNLOAD</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a hidden id="openbutton" style="background-color:rgba(255,255,255,1)">
+            <span>
+    <button class="undobutton" id="hiddenundo" type="button" name="undobutton" value="undo" size="20px">　</button>
+    <button class="redobutton" id="hiddenredo" type="button" name="redobutton" value="redo" size="20px">　</button>
+        </span>
+    <img id="openelement" src="https://utautattaro.com/storage/ic_play_for_work_black_48dp_1x.png"  width="24px"/>
+</a>
